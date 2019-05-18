@@ -18,7 +18,8 @@ RUN set -eux; \
         libssl-dev \
         git \
         pkg-config \
-        libclang-dev clang
+        libclang-dev clang; \
+    rm -rf /var/lib/apt/lists/*
 
 RUN url="https://static.rust-lang.org/rustup/archive/${RUSTUP_VERSION}/${RUST_ARCH}/rustup-init"; \
     wget "$url"; \
