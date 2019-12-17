@@ -1,3 +1,7 @@
 Environment for building [ckb](https://github.com/nervosnetwork/ckb#readme).
 
-Docker Hub autobuild has set up to build each branch using the branch name as tag name.
+## How to Upgrade Rust
+
+- Upgrade rustup if needed in all Dockerfiles
+- Update rust version in all Dockerfiles
+- Commit and tag `rust-${VERSION}` such as `rust-1.38.0`
