@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+import os
+from urllib import request
+
+RUST_VERSION = '1.41.0'
+RUSTUP_VERSION = '1.21.1'
+
+RUST_ARCH = 'x86_64-unknown-linux-gnu'
+
+DISTRIBUTIONS = [
+    # Ubuntu
+    'xenial', 'bionic',
+    # CentOS
+    'centos-7',
+]
+
+
+def fetch_rustup_hash():
+    url = f'https://static.rust-lang.org/rustup/archive/{RUSTUP_VERSION}/{RUST_ARCH}/rustup-init.sha256'
+    with request.urlopen(url) as f:
+        return f.read().decode('utf-8').split()[0]
+
+
+def load_template(dist):
+    with open(f'templates/{dist}.Dockerfile', 'r') as f:
+        return f.read()
+
+def save_dockerfile(dist, contents):
+    filepath = f'{dist}/Dockerfile'
+    filedir = os.path.dirname(filepath)
+    if filedir and not os.path.exists(filedir):
+        os.makedirs(filedir)
+    with open(filepath, 'w') as f:
+        f.write(contents)
+
+
+def generate_dockerfile(dist, rustup_sha256):
+    template = load_template(dist)
+    rendered = template \
+        .replace('%%RUST_VERSION%%', RUST_VERSION) \
+        .replace('%%RUSTUP_VERSION%%', RUSTUP_VERSION) \
+        .replace('%%RUSTUP_SHA256%%', rustup_sha256) \
+        .replace('%%RUST_ARCH%%', RUST_ARCH)
+    save_dockerfile(dist, rendered)
+
+
+def main():
+    rustup_sha256 = fetch_rustup_hash()
+    for dist in DISTRIBUTIONS:
+        generate_dockerfile(dist, rustup_sha256)
+
+
+if __name__ == '__main__':
+    main()
