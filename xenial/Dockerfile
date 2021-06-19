@@ -2,14 +2,23 @@ FROM ubuntu:xenial
 
 RUN set -eux; \
     apt-get update; \
+    apt-get install -y --no-install-recommends wget software-properties-common apt-transport-https; \
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -; \
+    apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main"; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+    apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
         libc6-dev \
-        wget \
         git \
         pkg-config \
-        libclang-dev clang; \
+        libclang-5.0-dev clang-5.0; \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 60; \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-5.0 60; \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-5.0 60; \
     rm -rf /var/lib/apt/lists/*
 
 ENV OPENSSL_VERSION=1.1.1c \
