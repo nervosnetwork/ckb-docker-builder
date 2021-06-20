@@ -12,12 +12,12 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
+        g++ \
         libc6-dev \
         git \
         pkg-config \
         libclang-5.0-dev clang-5.0; \
     update-alternatives --install /usr/bin/clang clang /usr/bin/clang-5.0 60; \
-    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-5.0 60; \
     update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-5.0 60; \
     rm -rf /var/lib/apt/lists/*
 
