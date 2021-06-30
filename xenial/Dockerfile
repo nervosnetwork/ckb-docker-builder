@@ -2,14 +2,35 @@ FROM ubuntu:xenial
 
 RUN set -eux; \
     apt-get update; \
+    apt-get install -y --no-install-recommends wget software-properties-common apt-transport-https; \
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -; \
+    apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main"; \
+    add-apt-repository -y ppa:ubuntu-toolchain-r/test; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+    apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
-        gcc \
+        gcc-7 \
+        g++-7 \
         libc6-dev \
-        wget \
         git \
         pkg-config \
-        libclang-dev clang; \
+        libclang-5.0-dev clang-5.0; \
+    update-alternatives \
+        --install /usr/bin/clang clang /usr/bin/clang-5.0 60 \
+        --slave /usr/bin/clang++ clang++ /usr/bin/clang++-5.0; \
+    update-alternatives \
+        --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 \
+        --slave /usr/bin/g++ g++ /usr/bin/g++-7 \
+        --slave /usr/bin/gcov gcov /usr/bin/gcov-7 \
+        --slave /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-7 \
+        --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-7 \
+        --slave /usr/bin/gcc-nm gcc-nm /usr/bin/gcc-nm-7 \
+        --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-7; \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-7 60; \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-7 60; \
     rm -rf /var/lib/apt/lists/*
 
 ENV OPENSSL_VERSION=1.1.1c \
