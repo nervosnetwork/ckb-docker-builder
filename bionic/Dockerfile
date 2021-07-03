@@ -4,6 +4,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
+        g++ \
         gcc \
         libc6-dev \
         wget \
