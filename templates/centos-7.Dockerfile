@@ -30,3 +30,6 @@ RUN set -eux; \
     rustup --version; \
     cargo --version; \
     rustc --version;
+
+ENTRYPOINT ["scl", "enable", "devtoolset-7"]
+CMD ["bash"]
