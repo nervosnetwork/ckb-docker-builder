@@ -10,7 +10,7 @@ RUST_ARCH = 'x86_64-unknown-linux-gnu'
 
 DISTRIBUTIONS = [
     # Ubuntu
-    'xenial', 'bionic',
+    'bionic',
     # CentOS
     'centos-7',
 ]
