@@ -1,0 +1,16 @@
+name: Template Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: python3 gen-dockerfiles
+      - run: git diff --exit-code
+

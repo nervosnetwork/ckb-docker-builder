@@ -4,14 +4,13 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         ca-certificates \
-        g++ \
         gcc \
+        g++ \
         libc6-dev \
         wget \
         libssl-dev \
         git \
-        pkg-config \
-        libclang-dev clang; \
+        pkg-config; \
     rm -rf /var/lib/apt/lists/*
 
 ENV RUSTUP_HOME=/usr/local/rustup \
