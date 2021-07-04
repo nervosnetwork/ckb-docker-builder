@@ -31,5 +31,7 @@ RUN set -eux; \
     cargo --version; \
     rustc --version;
 
-ENTRYPOINT ["scl", "enable", "devtoolset-7"]
+COPY centos-7/entrypoint.sh /
+
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

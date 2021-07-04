@@ -60,7 +60,7 @@ jobs:
 
     - name: Build CKB
       run: |
-        docker run --rm -i -w /ckb -v $(pwd)/ckb:/ckb ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ github.sha }} 'make prod'
+        docker run --rm -i -w /ckb -v $(pwd)/ckb:/ckb ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ github.sha }} make prod
 
   publish:
     name: Publish
