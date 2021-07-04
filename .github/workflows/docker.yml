@@ -90,11 +90,14 @@ jobs:
       run: echo "::set-output name=tag::${GITHUB_REF##*/}"
 
     - name: Tag and push image
-      uses: akhilerm/tag-push-action@v1.0.0
-      with:
-        src: ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ github.sha }}
-        dst: |
-          ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-latest
-          ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
-          nervos/ckb-docker-builder:${{ matrix.distro }}-latest
-          nervos/ckb-docker-builder:${{ matrix.distro }}-${{ github.event.inputs.tag }}
+      run: |
+        SRC_TAG=ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ github.sha }}
+        docker pull "$SRC_TAG"
+        docker tag "$SRC_TAG" ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-latest
+        docker push ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-latest
+        docker tag "$SRC_TAG" ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
+        docker push ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
+        docker tag "$SRC_TAG" nervos/ckb-docker-builder:${{ matrix.distro }}-latest
+        docker push nervos/ckb-docker-builder:${{ matrix.distro }}-latest
+        docker tag "$SRC_TAG" nervos/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
+        docker push nervos/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
