@@ -10,7 +10,9 @@ RUN set -eux; \
         wget \
         libssl-dev \
         git \
-        pkg-config; \
+        pkg-config \
+        libclang-dev \
+        clang; \
     rm -rf /var/lib/apt/lists/*
 
 ENV RUSTUP_HOME=/usr/local/rustup \

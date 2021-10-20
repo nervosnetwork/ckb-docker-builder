@@ -1,3 +1,3 @@
 #!/bin/bash
 
-scl enable devtoolset-7 "$*"
+scl enable devtoolset-7 llvm-toolset-7 "$*"
