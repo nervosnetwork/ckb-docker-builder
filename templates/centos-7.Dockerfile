@@ -4,7 +4,7 @@ ENV PATH=/root/.cargo/bin:$PATH
 
 RUN set -eux; \
     yum install -y centos-release-scl; \
-    yum install -y git curl make openssl-devel devtoolset-7 llvm-toolset-7 perl-core pcre-devel wget zlib-devel; \
+    yum install -y git curl make devtoolset-7 llvm-toolset-7 perl-core pcre-devel wget zlib-devel; \
     yum clean all; \
     rm -rf /var/cache/yum
 
