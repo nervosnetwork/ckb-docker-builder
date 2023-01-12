@@ -38,3 +38,5 @@ RUN set -eux; \
     cargo --version; \
     rustc --version; \
     openssl version;
+
+RUN git config --global --add safe.directory /ckb

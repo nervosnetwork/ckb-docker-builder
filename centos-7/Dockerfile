@@ -47,6 +47,8 @@ RUN set -eux; \
     rustc --version; \
     openssl version;
 
+RUN git config --global --add safe.directory /ckb
+
 COPY centos-7/entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]
