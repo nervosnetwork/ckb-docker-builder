@@ -3,7 +3,7 @@
 import os
 from urllib import request
 
-RUST_VERSION = '1.67.0'
+RUST_VERSION = '1.67.1'
 RUSTUP_VERSION = '1.25.2'
 
 RUST_ARCH = 'x86_64-unknown-linux-gnu'
