@@ -36,7 +36,7 @@ RUN set -eux; \
     echo "${RUSTUP_SHA256} *rustup-init" | sha256sum -c -; \
     chmod +x rustup-init
 
-ENV RUST_VERSION=1.67.1
+ENV RUST_VERSION=1.68.1
 
 RUN set -eux; \
     ./rustup-init -y --no-modify-path --default-toolchain $RUST_VERSION; \
