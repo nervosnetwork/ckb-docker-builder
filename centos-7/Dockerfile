@@ -26,7 +26,7 @@ RUN set -eux; \
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUSTUP_VERSION=1.26.0\
+    RUSTUP_VERSION=1.26.0 \
     RUSTUP_SHA256=0b2f6c8f85a3d02fde2efc0ced4657869d73fccfce59defb4e8d29233116e6db \
     RUST_ARCH=x86_64-unknown-linux-gnu
 
