@@ -1,6 +1,8 @@
 DOCKERHUB_REPO := nervos/ckb-docker-builder
 GHCR_REPO := ghcr.io/nervosnetwork/ckb-docker-builder
-IMAGE_VERSION := rust-$(shell sed -n "s/RUST_VERSION = '\(.*\)'$$/\1/p" gen-dockerfiles)
+RUST_VERSION := rust-$(shell sed -n "s/RUST_VERSION\s*=\s*'\(.*\)'$$/\1/p" gen-dockerfiles)
+OPENSSL_VERSION := openssl-$(shell sed -n "s/OPENSSL_VERSION\s*=\s*'\(.*\)'$$/\1/p" gen-dockerfiles)
+IMAGE_VERSION := ${RUST_VERSION}-${OPENSSL_VERSION}
 
 bionic/Dockerfile: gen-dockerfiles templates/bionic.Dockerfile
 	python3 gen-dockerfiles
