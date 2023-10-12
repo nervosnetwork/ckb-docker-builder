@@ -3,8 +3,9 @@
 import os
 from urllib import request
 
-RUST_VERSION = '1.71.1'
-RUSTUP_VERSION = '1.26.0'
+RUST_VERSION     =  '1.71.1'
+RUSTUP_VERSION   =  '1.26.0'
+OPENSSL_VERSION  =  '3.1.3'
 
 RUST_ARCH = 'x86_64-unknown-linux-gnu'
 
@@ -18,6 +19,11 @@ DISTRIBUTIONS = [
 
 def fetch_rustup_hash():
     url = f'https://static.rust-lang.org/rustup/archive/{RUSTUP_VERSION}/{RUST_ARCH}/rustup-init.sha256'
+    with request.urlopen(url) as f:
+        return f.read().decode('utf-8').split()[0]
+
+def fetch_openssl_hash():
+    url = f'https://www.openssl.org/source/openssl-{OPENSSL_VERSION}.tar.gz.sha256'
     with request.urlopen(url) as f:
         return f.read().decode('utf-8').split()[0]
 
@@ -35,20 +41,23 @@ def save_dockerfile(dist, contents):
         f.write(contents)
 
 
-def generate_dockerfile(dist, rustup_sha256):
+def generate_dockerfile(dist, rustup_sha256, openssl_sha256):
     template = load_template(dist)
     rendered = template \
         .replace('%%RUST_VERSION%%', RUST_VERSION) \
         .replace('%%RUSTUP_VERSION%%', RUSTUP_VERSION) \
         .replace('%%RUSTUP_SHA256%%', rustup_sha256) \
-        .replace('%%RUST_ARCH%%', RUST_ARCH)
+        .replace('%%RUST_ARCH%%', RUST_ARCH)  \
+        .replace('%%OPENSSL_VERSION%%', OPENSSL_VERSION) \
+        .replace('%%OPENSSL_SHA256%%', openssl_sha256)
     save_dockerfile(dist, rendered)
 
 
 def main():
     rustup_sha256 = fetch_rustup_hash()
+    openssl_sha256 = fetch_openssl_hash()
     for dist in DISTRIBUTIONS:
-        generate_dockerfile(dist, rustup_sha256)
+        generate_dockerfile(dist, rustup_sha256, openssl_sha256)
 
 
 if __name__ == '__main__':

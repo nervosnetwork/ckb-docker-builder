@@ -8,7 +8,6 @@ RUN set -eux; \
         g++ \
         libc6-dev \
         wget \
-        libssl-dev \
         git \
         pkg-config \
         libclang-dev \
@@ -20,7 +19,22 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     PATH=/usr/local/cargo/bin:$PATH \
     RUSTUP_VERSION=%%RUSTUP_VERSION%% \
     RUSTUP_SHA256=%%RUSTUP_SHA256%% \
-    RUST_ARCH=%%RUST_ARCH%%
+    RUST_ARCH=%%RUST_ARCH%% \
+    OPENSSL_VERSION=%%OPENSSL_VERSION%% \
+    OPENSSL_SHA256=%%OPENSSL_SHA256%%
+
+RUN set -eux; \
+    url="https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"; \
+    wget --no-check-certificate "$url"; \
+    echo "${OPENSSL_SHA256} *openssl-${OPENSSL_VERSION}.tar.gz" | sha256sum -c -; \
+    tar -xzf "openssl-${OPENSSL_VERSION}.tar.gz"; \
+    cd openssl-${OPENSSL_VERSION}; \
+    ./config no-shared no-zlib -fPIC -DOPENSSL_NO_SECURE_MEMORY; \
+    make; \
+    make install; \
+    cd ..; \
+    rm -rf openssl-${OPENSSL_VERSION} openssl-${OPENSSL_VERSION}.tar.gz
+
 
 RUN set -eux; \
     url="https://static.rust-lang.org/rustup/archive/${RUSTUP_VERSION}/${RUST_ARCH}/rustup-init"; \
