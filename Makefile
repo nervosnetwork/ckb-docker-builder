@@ -10,7 +10,10 @@ bionic/Dockerfile: gen-dockerfiles templates/bionic.Dockerfile
 centos-7/Dockerfile: gen-dockerfiles templates/centos-7.Dockerfile
 	python3 gen-dockerfiles
 
-build-all: build-bionic build-centos-7
+aarch64/Dockerfile: gen-dockerfiles templates/aarch64.Dockerfile
+	python3 gen-dockerfiles
+
+build-all: build-bionic build-centos-7 build-aarch64
 
 build-bionic: bionic/Dockerfile
 	docker build -f bionic/Dockerfile --tag ${DOCKERHUB_REPO}:bionic-${IMAGE_VERSION} .
@@ -18,9 +21,11 @@ build-bionic: bionic/Dockerfile
 build-centos-7: centos-7/Dockerfile
 	docker build -f centos-7/Dockerfile --tag ${DOCKERHUB_REPO}:centos-7-${IMAGE_VERSION} .
 
-.PHONY: build-all build-bionic build-centos-7
+build-aarch64: aarch64/Dockerfile
+	docker build -f aarch64/Dockerfile --tag ${DOCKERHUB_REPO}:aarch64-${IMAGE_VERSION} .
 
-push-all: push-bionic push-centos-7
+.PHONY: build-all build-bionic build-centos-7 build-aarch64
+push-all: push-bionic push-centos-7 push-aarch64
 
 push-bionic: build-bionic
 	docker push ${DOCKERHUB_REPO}:bionic-${IMAGE_VERSION}
@@ -28,7 +33,10 @@ push-bionic: build-bionic
 push-centos-7: build-centos-7
 	docker push ${DOCKERHUB_REPO}:centos-7-${IMAGE_VERSION}
 
-.PHONY: push-all push-bionic push-centos-7
+push-aarch64: build-aarch64
+	docker push ${DOCKERHUB_REPO}:aarch64-${IMAGE_VERSION}
+
+.PHONY: push-all push-bionic push-centos-7 push-aarch64
 
 test-all: test-bionic test-centos-7
 
