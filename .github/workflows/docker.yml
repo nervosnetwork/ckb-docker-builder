@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        distro: [centos-7, bionic]
+        distro: [centos-7, bionic, aarch64]
 
     steps:
     - name: Checkout
@@ -48,7 +48,7 @@ jobs:
 
     strategy:
       matrix:
-        distro: [centos-7, bionic]
+        distro: [centos-7, bionic, aarch64]
 
     steps:
     - name: Checkout CKB
@@ -69,7 +69,7 @@ jobs:
 
     strategy:
       matrix:
-        distro: [centos-7, bionic]
+        distro: [centos-7, bionic, aarch64]
 
     steps:
     - name: Login to ghcr
