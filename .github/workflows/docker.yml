@@ -76,7 +76,7 @@ jobs:
     - name: Tag and push image
       run: |
         SRC_TAG=ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ github.sha }}
-        docker pull "$SRC_TAG"
+        docker pull --platform linux/aarch64 "$SRC_TAG"
         docker tag "$SRC_TAG" ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-latest
         docker push ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-latest
         docker tag "$SRC_TAG" ghcr.io/nervosnetwork/ckb-docker-builder:${{ matrix.distro }}-${{ steps.tag.outputs.tag }}
