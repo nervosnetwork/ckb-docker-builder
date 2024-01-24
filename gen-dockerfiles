@@ -3,7 +3,7 @@
 import os
 from urllib import request
 
-RUST_VERSION     =  '1.71.1'
+RUST_VERSION     =  '1.75.0'
 RUSTUP_VERSION   =  '1.26.0'
 
 DISTRIBUTIONS = {
