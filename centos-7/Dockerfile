@@ -32,6 +32,7 @@ RUN set -eux; \
     rustc --version;
 
 RUN git config --global --add safe.directory /ckb
+RUN git config --global --add safe.directory /ckb-cli
 
 COPY centos-7/entrypoint.sh /
 
