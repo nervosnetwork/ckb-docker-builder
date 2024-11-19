@@ -3,8 +3,8 @@
 import os
 from urllib import request
 
-RUST_VERSION     =  '1.75.0'
-RUSTUP_VERSION   =  '1.26.0'
+RUST_VERSION     =  '1.81.0'
+RUSTUP_VERSION   =  '1.27.1'
 
 DISTRIBUTIONS = {
     # Ubuntu

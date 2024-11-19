@@ -18,8 +18,8 @@ RUN set -eux; \
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUSTUP_VERSION=1.26.0 \
-    RUSTUP_SHA256=673e336c81c65e6b16dcdede33f4cc9ed0f08bde1dbe7a935f113605292dc800 \
+    RUSTUP_VERSION=1.27.1 \
+    RUSTUP_SHA256=1cffbf51e63e634c746f741de50649bbbcbd9dbe1de363c9ecef64e278dba2b2 \
     RUST_ARCH=aarch64-unknown-linux-gnu
 
 RUN set -eux; \
@@ -28,7 +28,7 @@ RUN set -eux; \
     echo "${RUSTUP_SHA256} *rustup-init" | sha256sum -c -; \
     chmod +x rustup-init
 
-ENV RUST_VERSION=1.75.0
+ENV RUST_VERSION=1.81.0
 
 RUN set -eux; \
     ./rustup-init -y --no-modify-path --default-toolchain $RUST_VERSION; \
