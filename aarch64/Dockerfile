@@ -1,4 +1,4 @@
-FROM arm64v8/ubuntu
+FROM arm64v8/ubuntu:20.04
 
 RUN set -eux; \
     apt-get update; \
