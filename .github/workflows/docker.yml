@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: centos-7
+          - distro: ubuntu-20.04
             platform: linux/amd64
           - distro: bionic
             platform: linux/amd64
@@ -57,7 +57,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: centos-7
+          - distro: ubuntu-20.04
             platform: linux/amd64
           - distro: bionic
             platform: linux/amd64
@@ -93,7 +93,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: centos-7
+          - distro: ubuntu-20.04
             platform: linux/amd64
           - distro: bionic
             platform: linux/amd64

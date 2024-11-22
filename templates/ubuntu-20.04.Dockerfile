@@ -1,18 +1,12 @@
-FROM centos:7
+FROM ubuntu:20.04
 
 ENV PATH=/root/.cargo/bin:$PATH
 
 RUN set -eux; \
-    sed -i 's/mirror.centos.org/vault.centos.org/g' /etc/yum.repos.d/CentOS-*.repo; \
-    sed -i 's/^#.*baseurl=http/baseurl=http/g' /etc/yum.repos.d/CentOS-*.repo; \
-    sed -i 's/^mirrorlist=http/#mirrorlist=http/g' /etc/yum.repos.d/CentOS-*.repo; \
-    yum install -y centos-release-scl; \
-    sed -i 's/mirror.centos.org/vault.centos.org/g' /etc/yum.repos.d/CentOS-*.repo; \
-    sed -i 's/^#.*baseurl=http/baseurl=http/g' /etc/yum.repos.d/CentOS-*.repo; \
-    sed -i 's/^mirrorlist=http/#mirrorlist=http/g' /etc/yum.repos.d/CentOS-*.repo; \
-    yum install -y git curl make devtoolset-8 llvm-toolset-7 perl-core pcre-devel wget zlib-devel; \
-    yum clean all; \
-    rm -rf /var/cache/yum
+    apt update; \
+    apt install -y git curl build-essential llvm perl libpcre3-dev wget zlib1g-dev; \
+    apt clean all; \
+    rm -rf /var/cache/apt
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
@@ -40,7 +34,4 @@ RUN set -eux; \
 RUN git config --global --add safe.directory /ckb
 RUN git config --global --add safe.directory /ckb-cli
 
-COPY centos-7/entrypoint.sh /
-
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

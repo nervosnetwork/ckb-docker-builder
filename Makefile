@@ -6,38 +6,38 @@ IMAGE_VERSION := ${RUST_VERSION}
 bionic/Dockerfile: gen-dockerfiles templates/bionic.Dockerfile
 	python3 gen-dockerfiles
 
-centos-7/Dockerfile: gen-dockerfiles templates/centos-7.Dockerfile
+ubuntu-20.04/Dockerfile: gen-dockerfiles templates/ubuntu-20.04.Dockerfile
 	python3 gen-dockerfiles
 
 aarch64/Dockerfile: gen-dockerfiles templates/aarch64.Dockerfile
 	python3 gen-dockerfiles
 
-build-all: build-bionic build-centos-7 build-aarch64
+build-all: build-bionic build-ubuntu-20.04 build-aarch64
 
 build-bionic: bionic/Dockerfile
 	docker build -f bionic/Dockerfile --tag ${DOCKERHUB_REPO}:bionic-${IMAGE_VERSION} .
 
-build-centos-7: centos-7/Dockerfile
-	docker build -f centos-7/Dockerfile --tag ${DOCKERHUB_REPO}:centos-7-${IMAGE_VERSION} .
+build-ubuntu-20.04: ubuntu-20.04/Dockerfile
+	docker build -f ubuntu-20.04/Dockerfile --tag ${DOCKERHUB_REPO}:ubuntu-20.04-${IMAGE_VERSION} .
 
 build-aarch64: aarch64/Dockerfile
 	docker build -f aarch64/Dockerfile --tag ${DOCKERHUB_REPO}:aarch64-${IMAGE_VERSION} .
 
-.PHONY: build-all build-bionic build-centos-7 build-aarch64
-push-all: push-bionic push-centos-7 push-aarch64
+.PHONY: build-all build-bionic build-ubuntu-20.04 build-aarch64
+push-all: push-bionic push-ubuntu-20.04 push-aarch64
 
 push-bionic: build-bionic
 	docker push ${DOCKERHUB_REPO}:bionic-${IMAGE_VERSION}
 
-push-centos-7: build-centos-7
-	docker push ${DOCKERHUB_REPO}:centos-7-${IMAGE_VERSION}
+push-ubuntu-20.04: build-ubuntu-20.04
+	docker push ${DOCKERHUB_REPO}:ubuntu-20.04-${IMAGE_VERSION}
 
 push-aarch64: build-aarch64
 	docker push ${DOCKERHUB_REPO}:aarch64-${IMAGE_VERSION}
 
-.PHONY: push-all push-bionic push-centos-7 push-aarch64
+.PHONY: push-all push-bionic push-ubuntu-20.04 push-aarch64
 
-test-all: test-bionic test-centos-7
+test-all: test-bionic test-ubuntu-20.04
 
 sync-ckb:
 	if [ -d ckb ]; then git -C ckb pull; else git clone --depth 1 https://github.com/nervosnetwork/ckb.git; fi
@@ -45,7 +45,7 @@ sync-ckb:
 test-bionic: sync-ckb
 	docker run --rm -it -w /ckb -v "$$(pwd)/ckb:/ckb" ${DOCKERHUB_REPO}:bionic-${IMAGE_VERSION} make prod
 
-test-centos-7: sync-ckb
-	docker run --rm -it -w /ckb -v "$$(pwd)/ckb:/ckb" ${DOCKERHUB_REPO}:centos-7-${IMAGE_VERSION} make prod
+test-ubuntu-20.04: sync-ckb
+	docker run --rm -it -w /ckb -v "$$(pwd)/ckb:/ckb" ${DOCKERHUB_REPO}:ubuntu-20.04-${IMAGE_VERSION} make prod
 
-.PHONY: test-all test-bionic test-centos-7 sync-ckb
+.PHONY: test-all test-bionic test-ubuntu-20.04 sync-ckb
