@@ -17,7 +17,7 @@ jobs:
         include:
           - distro: centos-7
             platform: linux/amd64
-          - distro: bionic
+          - distro: focal
             platform: linux/amd64
           - distro: aarch64
             platform: linux/arm64
@@ -59,7 +59,7 @@ jobs:
         include:
           - distro: centos-7
             platform: linux/amd64
-          - distro: bionic
+          - distro: focal
             platform: linux/amd64
           - distro: aarch64
             platform: linux/arm64
@@ -95,7 +95,7 @@ jobs:
         include:
           - distro: centos-7
             platform: linux/amd64
-          - distro: bionic
+          - distro: focal
             platform: linux/amd64
           - distro: aarch64
             platform: linux/arm64

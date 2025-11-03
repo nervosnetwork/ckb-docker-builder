@@ -8,7 +8,7 @@ RUSTUP_VERSION   =  '1.27.1'
 
 DISTRIBUTIONS = {
     # Ubuntu
-    'bionic': 'x86_64-unknown-linux-gnu',
+    'focal': 'x86_64-unknown-linux-gnu',
     # CentOS
     'centos-7': 'x86_64-unknown-linux-gnu',
     # Arch64
