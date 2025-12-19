@@ -3,10 +3,8 @@ FROM ubuntu:focal
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
+        build-essential \
         ca-certificates \
-        gcc \
-        g++ \
-        libc6-dev \
         wget \
         git \
         pkg-config \

@@ -3,11 +3,8 @@ FROM arm64v8/ubuntu:22.04
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        ca-certificates \
         build-essential \
-        gcc \
-        g++ \
-        libc6-dev \
+        ca-certificates \
         wget \
         git \
         pkg-config \
